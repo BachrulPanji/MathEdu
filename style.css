@@ -1,0 +1,96 @@
+* {
+    font-family: 'Poppins', sans-serif;
+}
+
+.gradient-bg {
+    background: linear-gradient(135deg, #0f172a 0%, #1a1f3a 100%);
+}
+
+.card-glass {
+    background: rgba(30, 41, 59, 0.6);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(71, 85, 105, 0.4);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    transition: all 0.3s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
+}
+
+.btn-secondary {
+    background: rgba(51, 65, 85, 0.5);
+    transition: all 0.3s;
+}
+
+.btn-secondary:hover {
+    background: rgba(71, 85, 105, 0.7);
+}
+
+.option-btn {
+    transition: all 0.3s ease;
+    border: 2px solid rgba(71, 85, 105, 0.5);
+    background: rgba(30, 41, 59, 0.4);
+}
+
+.option-btn:hover {
+    transform: translateY(-2px);
+    border-color: rgba(59, 130, 246, 0.5);
+    background: rgba(51, 65, 85, 0.5);
+}
+
+.option-btn.selected {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    border-color: transparent;
+}
+
+.option-btn.correct {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    border-color: transparent;
+}
+
+.option-btn.wrong {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    border-color: transparent;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.slide-in {
+    animation: slideIn 0.5s ease forwards;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+    background: rgba(71, 85, 105, 0.2);
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+    background: rgba(59, 130, 246, 0.5);
+    border-radius: 3px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background: rgba(59, 130, 246, 0.7);
+}
+
+svg {
+    filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.4));
+}
