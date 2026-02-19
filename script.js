@@ -1,28 +1,7 @@
 // Default configuration
 const defaultConfig = {
-    app_title: 'Matematika Master'
+    app_title: 'Math edukasi'
 };
-
-// Initialize Element SDK
-if (window.elementSdk) {
-    window.elementSdk.init({
-        defaultConfig,
-        onConfigChange: async (config) => {
-            const title = config.app_title || defaultConfig.app_title;
-            document.getElementById('app-title').textContent = title;
-            document.title = title;
-        },
-        mapToCapabilities: (config) => ({
-            recolorables: [],
-            borderables: [],
-            fontEditable: undefined,
-            fontSizeable: undefined
-        }),
-        mapToEditPanelValues: (config) => new Map([
-            ['app_title', config.app_title || defaultConfig.app_title]
-        ])
-    });
-}
 
 // Math Topics Data
 const mathTopics = {
