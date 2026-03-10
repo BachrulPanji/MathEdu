@@ -1,18 +1,35 @@
-const CACHE_NAME = 'mathflow-v1';
+const CACHE_NAME = 'mathflow-v2';
 const ASSETS = [
     './',
     './index.html',
-    './style.css',
-    './script.js',
     './manifest.json',
-    'https://cdn.tailwindcss.com/3.4.17',
-    'https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap'
+    './assets/img/gears.png',
+    './assets/img/favicon.ico',
+    './assets/js/main.js',
+    './assets/js/math_data.js',
+    './assets/js/economics_data.js',
+    './login/index.html',
+    './login/script.js'
 ];
 
 self.addEventListener('install', (event) => {
     event.waitUntil(
         caches.open(CACHE_NAME).then((cache) => {
             return cache.addAll(ASSETS);
+        })
+    );
+});
+
+self.addEventListener('activate', (event) => {
+    event.waitUntil(
+        caches.keys().then((cacheNames) => {
+            return Promise.all(
+                cacheNames.map((cacheName) => {
+                    if (cacheName !== CACHE_NAME) {
+                        return caches.delete(cacheName);
+                    }
+                })
+            );
         })
     );
 });

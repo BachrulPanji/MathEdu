@@ -4,17 +4,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Math edukasi</title>
+  <title>Ruang Edukasi - Belajar Jadi Seru</title>
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="assets/css/style.css">
   <meta name="theme-color" content="#6366f1">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <link rel="manifest" href="manifest.json">
+  <link rel="manifest" href="./manifest.json">
   <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3426/3426653.png">
-  <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="assets/img/favicon.ico" type="image/x-icon">
   <style>
     body {
       box-sizing: border-box;
@@ -28,194 +28,469 @@
     <nav class="sticky top-0 z-50 card-glass px-4 py-3">
       <div class="max-w-6xl mx-auto flex items-center justify-between">
         <div class="flex items-center gap-3 cursor-pointer" onclick="showHome()">
-          <h1 id="app-title" class="text-xl font-bold">Ruang Math Panji</h1>
+          <div
+            class="w-10 h-10 rounded-xl bg-indigo-500 flex items-center justify-center text-xl shadow-lg shadow-indigo-500/20">
+            🎓</div>
+          <h1 id="app-title" class="text-xl font-bold tracking-tight">Ruang <span class="text-indigo-400">Edukasi</span>
+          </h1>
         </div>
-        <div class="flex items-center gap-2 sm:gap-4">
-          <div class="flex items-center gap-1 sm:gap-2 card-glass px-2 sm:px-3 py-2 rounded-lg">
-            <span class="text-yellow-400">⭐</span> <span id="nav-score"
-              class="font-semibold text-xs sm:text-base">0</span>
-          </div>
+
+        <div class="hidden md:flex items-center gap-8 ml-10">
+          <button onclick="showHome()"
+            class="text-sm font-medium text-gray-400 hover:text-white transition">Beranda</button>
+          <a href="#features" class="text-sm font-medium text-gray-400 hover:text-white transition">Konsep</a>
+          <a href="#about" class="text-sm font-medium text-gray-400 hover:text-white transition">Tentang</a>
           <button onclick="showCreatorProfile()"
-            class="flex items-center gap-2 card-glass px-2 sm:px-3 py-2 rounded-lg hover:bg-white/10 transition text-xs sm:text-sm">
-            <span>👨‍💻</span> <span class="hidden sm:inline">Profil</span>
+            class="text-sm font-medium text-gray-400 hover:text-white transition">Profile
+            Developer</button>
+        </div>
+
+        <!-- Subject Dropdown -->
+        <div class="relative ml-auto mr-4">
+          <button id="subject-dropdown-btn"
+            class="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition">
+            <span class="active-subject-name font-semibold text-sm sm:text-base">Pilih Pelajaran</span>
+            <span class="text-[10px] opacity-50">▼</span>
           </button>
-          <button onclick="showStats()" class="p-2 rounded-lg hover:bg-white/10 transition">📊</button>
-          <button onclick="resetProgress()" class="p-2 rounded-lg hover:bg-white/10 transition text-sm">🔄</button>
+          <div id="subject-dropdown-menu"
+            class="hidden absolute top-full right-0 mt-2 w-48 card-glass rounded-xl overflow-hidden shadow-2xl border border-white/5 py-1">
+            <button onclick="switchSubject('math')"
+              class="subject-opt w-full text-left px-4 py-3 hover:bg-white/5 transition flex items-center gap-3"
+              data-subject="math">
+              <span>📐</span> Matematika
+            </button>
+            <button onclick="switchSubject('economics')"
+              class="subject-opt w-full text-left px-4 py-3 hover:bg-white/5 transition flex items-center gap-3"
+              data-subject="economics">
+              <span>💰</span> Ekonomi
+            </button>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <button onclick="showStats()" class="p-2 rounded-lg hover:bg-white/10 transition"
+            title="Statistik">Dashboard</button>
+          <div class="flex items-center gap-1.5 bg-yellow-500/10 px-3 py-1.5 rounded-lg border border-yellow-500/20">
+            <span class="text-yellow-400 text-sm">⭐</span>
+            <span id="nav-score" class="font-bold text-yellow-400 text-sm">0</span>
+          </div>
+          <button onclick="logout()" class="p-2 rounded-lg hover:bg-white/10 transition" title="Logout">Logout</button>
         </div>
       </div>
-    </nav><!-- Main Content -->
+    </nav>
+
     <main id="main-content" class="max-w-6xl mx-auto p-4 pb-8">
-      <!-- Home Screen -->
+      <!-- Home Screen / Landing Page -->
       <div id="home-screen" class="slide-in">
-        <!-- Stats Overview -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-          <div class="card-glass rounded-2xl p-4 text-center">
-            <div class="text-3xl mb-2">
-              🎯
-            </div>
-            <div id="total-score" class="text-2xl font-bold text-yellow-400">
-              0
-            </div>
-            <div class="text-sm text-gray-400">
-              Total Skor
-            </div>
-          </div>
-          <div class="card-glass rounded-2xl p-4 text-center">
-            <div class="text-3xl mb-2">
-              ✅
-            </div>
-            <div id="total-correct" class="text-2xl font-bold text-green-400">
-              0
-            </div>
-            <div class="text-sm text-gray-400">
-              Soal Benar
+        <!-- Hero Section -->
+        <div
+          class="relative rounded-[2.5rem] overflow-hidden mb-16 py-20 px-8 sm:px-16 text-center sm:text-left bg-gradient-to-br from-indigo-600/20 via-purple-600/10 to-transparent border border-white/5">
+          <div class="absolute top-0 right-0 w-96 h-96 bg-indigo-500/10 blur-[120px] -mr-32 -mt-32"></div>
+          <div class="relative z-10 max-w-2xl">
+            <span
+              class="inline-block px-4 py-1.5 rounded-full bg-indigo-500/10 text-indigo-400 text-sm font-bold mb-6 border border-indigo-500/20">✨
+              Solusi Belajar Masa Kini</span>
+            <h1 class="text-4xl sm:text-6xl font-black mb-6 leading-tight">Belajar Apapun Jadi <span
+                class="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400">Lebih
+                Seru</span>
+            </h1>
+            <p class="text-lg text-gray-400 mb-10 leading-relaxed">Platform edukasi interaktif untuk membantu
+              siswa SD,
+              SMP, hingga SMA menguasai mata pelajaran dengan metode visual yang menyenangkan.</p>
+            <div class="flex flex-wrap justify-center sm:justify-start gap-4">
+              <button onclick="document.getElementById('subject-dropdown-btn').click()"
+                class="btn-primary px-8 py-4 rounded-2xl font-bold text-lg shadow-xl shadow-indigo-500/20 hover:scale-105 transition">Mulai
+                Belajar Sekarang</button>
             </div>
           </div>
-          <div class="card-glass rounded-2xl p-4 text-center">
-            <div class="text-3xl mb-2">
-              🥈
-            </div>
-            <div id="total-attempted" class="text-2xl font-bold text-blue-400">
-              0
-            </div>
-            <div class="text-sm text-gray-400">
-              Soal Dikerjakan
-            </div>
-          </div>
-          <div class="card-glass rounded-2xl p-4 text-center">
-            <div class="text-3xl mb-2">
-              🕒
-            </div>
-            <div id="accuracy" class="text-2xl font-bold text-purple-400">
-              0%
-            </div>
-            <div class="text-sm text-gray-400">
-              Akurasi
-            </div>
-          </div>
-        </div><!-- Level Selection -->
-        <h2 class="text-2xl font-bold mb-6 flex items-center gap-2"><span>🎓</span> Pilih Level Belajar</h2>
-        <div class="grid md:grid-cols-3 gap-6">
-          <!-- SD Level -->
-          <div
-            class="level-card card-glass rounded-2xl p-6 cursor-pointer border-2 border-transparent hover:border-green-500"
-            onclick="selectLevel('sd')">
-            <div class="flex items-center gap-4 mb-4">
-              <div
-                class="w-16 h-16 rounded-2xl bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center text-3xl">
-                🌱
+        </div>
+
+        <!-- Features Grid / Konsep Belajar -->
+        <div id="features" class="scroll-mt-24 mb-20">
+          <h2 class="text-3xl font-black mb-10 text-center">Konsep <span class="text-indigo-400">Belajar
+              Kami</span>
+          </h2>
+          <div class="grid sm:grid-cols-3 gap-6">
+            <div class="card-glass p-8 rounded-3xl border border-white/5 hover:border-indigo-500/30 transition">
+              <div class="w-14 h-14 rounded-2xl bg-indigo-500/10 flex items-center justify-center text-3xl mb-6">
+                💡
               </div>
-              <div>
-                <h3 class="text-xl font-bold">Level SD</h3>
-                <p class="text-sm text-gray-400">Dasar Logika &amp; Aritmatika</p>
-              </div>
+              <h3 class="text-xl font-bold mb-3">Konsep Visual</h3>
+              <p class="text-gray-400 text-sm leading-relaxed">Materi dijelaskan dengan ilustrasi dan
+                langkah-langkah
+                yang mudah dipahami anak-anak.</p>
             </div>
-            <div class="space-y-2 text-sm text-gray-300 mb-4">
-              <p>• Penjumlahan &amp; Pengurangan</p>
-              <p>• Perkalian &amp; Pembagian</p>
-              <p>• Pecahan &amp; Desimal</p>
-              <p>• Bangun Datar &amp; Ruang</p>
-            </div>
-            <div class="flex items-center justify-between">
-              <div class="text-sm">
-                <span class="text-green-400" id="sd-progress">0</span> <span class="text-gray-500">/ 7 topik</span>
-              </div>
-              <div class="w-24 h-2 bg-gray-700 rounded-full overflow-hidden">
-                <div id="sd-progress-bar" class="h-full bg-gradient-to-r from-green-500 to-emerald-400 transition-all"
-                  style="width: 0%"></div>
-              </div>
-            </div>
-          </div><!-- SMP Level -->
-          <div
-            class="level-card card-glass rounded-2xl p-6 cursor-pointer border-2 border-transparent hover:border-blue-500"
-            onclick="selectLevel('smp')">
-            <div class="flex items-center gap-4 mb-4">
-              <div
-                class="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-600 flex items-center justify-center text-3xl">
-                🏙
-              </div>
-              <div>
-                <h3 class="text-xl font-bold">Level SMP</h3>
-                <p class="text-sm text-gray-400">Fondasi Aljabar &amp; Geometri</p>
-              </div>
-            </div>
-            <div class="space-y-2 text-sm text-gray-300 mb-4">
-              <p>• Bentuk Aljabar</p>
-              <p>• Persamaan Linear</p>
-              <p>• Teorema Pythagoras</p>
-              <p>• Statistik &amp; Peluang</p>
-            </div>
-            <div class="flex items-center justify-between">
-              <div class="text-sm">
-                <span class="text-blue-400" id="smp-progress">0</span> <span class="text-gray-500">/ 8 topik</span>
-              </div>
-              <div class="w-24 h-2 bg-gray-700 rounded-full overflow-hidden">
-                <div id="smp-progress-bar" class="h-full bg-gradient-to-r from-blue-500 to-cyan-400 transition-all"
-                  style="width: 0%"></div>
-              </div>
-            </div>
-          </div><!-- SMA Level -->
-          <div
-            class="level-card card-glass rounded-2xl p-6 cursor-pointer border-2 border-transparent hover:border-purple-500"
-            onclick="selectLevel('sma')">
-            <div class="flex items-center gap-4 mb-4">
-              <div
-                class="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center text-3xl">
-                🎯
-              </div>
-              <div>
-                <h3 class="text-xl font-bold">Level SMA</h3>
-                <p class="text-sm text-gray-400">Abstraksi &amp; Analisis</p>
-              </div>
-            </div>
-            <div class="space-y-2 text-sm text-gray-300 mb-4">
-              <p>• Fungsi &amp; Grafik</p>
-              <p>• Limit &amp; Turunan</p>
-              <p>• Integral</p>
-              <p>• Trigonometri &amp; Logaritma</p>
-            </div>
-            <div class="flex items-center justify-between">
-              <div class="text-sm">
-                <span class="text-purple-400" id="sma-progress">0</span> <span class="text-gray-500">/ 10 topik</span>
-              </div>
-              <div class="w-24 h-2 bg-gray-700 rounded-full overflow-hidden">
-                <div id="sma-progress-bar" class="h-full bg-gradient-to-r from-purple-500 to-pink-400 transition-all"
-                  style="width: 0%"></div>
-              </div>
-            </div>
-          </div>
-        </div><!-- Quick Actions -->
-        <div class="mt-8 grid sm:grid-cols-2 gap-4">
-          <button onclick="startExam()" class="card-glass rounded-2xl p-6 text-left hover:bg-white/5 transition group">
-            <div class="flex items-center gap-4">
-              <div
-                class="w-14 h-14 rounded-xl bg-gradient-to-br from-red-500 to-orange-500 flex items-center justify-center text-2xl group-hover:scale-110 transition">
+            <div class="card-glass p-8 rounded-3xl border border-white/5 hover:border-purple-500/30 transition">
+              <div class="w-14 h-14 rounded-2xl bg-purple-500/10 flex items-center justify-center text-3xl mb-6">
                 📝
               </div>
-              <div>
-                <h3 class="text-lg font-bold">Mode Ujian</h3>
-                <p class="text-sm text-gray-400">20 soal acak dengan waktu terbatas</p>
-              </div>
+              <h3 class="text-xl font-bold mb-3">Latihan Interaktif</h3>
+              <p class="text-gray-400 text-sm leading-relaxed">Ratusan soal kurikulum terbaru dengan pembahasan
+                instan
+                untuk setiap jawaban.</p>
             </div>
-          </button> <button onclick="startRandom()"
-            class="card-glass rounded-2xl p-6 text-left hover:bg-white/5 transition group">
-            <div class="flex items-center gap-4">
-              <div
-                class="w-14 h-14 rounded-xl bg-gradient-to-br from-yellow-500 to-amber-500 flex items-center justify-center text-2xl group-hover:scale-110 transition">
-                ♻
+            <div class="card-glass p-8 rounded-3xl border border-white/5 hover:border-emerald-500/30 transition">
+              <div class="w-14 h-14 rounded-2xl bg-emerald-500/10 flex items-center justify-center text-3xl mb-6">
+                📊
               </div>
-              <div>
-                <h3 class="text-lg font-bold">Latihan Acak</h3>
-                <p class="text-sm text-gray-400">Latihan soal dari semua level</p>
-              </div>
+              <h3 class="text-xl font-bold mb-3">Pantau Progress</h3>
+              <p class="text-gray-400 text-sm leading-relaxed">Sistem statistik canggih untuk melihat perkembangan
+                skor
+                dan akurasi belajar Anda.</p>
             </div>
-          </button>
+          </div>
         </div>
-      </div><!-- Level Screen -->
+
+        <!-- About Section -->
+        <div id="about"
+          class="scroll-mt-24 mb-16 card-glass rounded-[2.5rem] p-8 sm:p-16 border border-white/5 relative overflow-hidden">
+          <div class="absolute -right-20 -bottom-20 w-64 h-64 bg-indigo-500/10 blur-3xl rounded-full"></div>
+          <div class="relative z-10 grid md:grid-cols-2 gap-12 items-center">
+            <div>
+              <h2 class="text-3xl font-black mb-6">Tentang <span class="text-indigo-400">Ruang Edukasi</span></h2>
+              <p class="text-gray-400 leading-relaxed mb-6">
+                Ruang Edukasi lahir dari semangat untuk mendemokratisasi pendidikan berkualitas. Kami percaya
+                bahwa
+                setiap anak memiliki cara belajar yang unik. Lewat pendekatan gamifikasi dan visualisasi data,
+                kami
+                membantu siswa memahami konsep abstrak dalam Matematika dan Ekonomi dengan cara yang lebih nyata
+                dan
+                menyenangkan.
+              </p>
+              <div class="flex gap-4">
+                <button onclick="showCreatorProfile()"
+                  class="px-6 py-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition text-sm font-bold">Kenali
+                  Pembuat</button>
+              </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+              <div class="card-glass p-6 rounded-2xl border border-white/5 text-center">
+                <div id="stat-subjects" class="text-3xl font-black text-indigo-400 mb-1">0</div>
+                <div class="text-xs text-gray-500 font-bold uppercase tracking-wider">Mata Pelajaran</div>
+              </div>
+              <div class="card-glass p-6 rounded-2xl border border-white/5 text-center">
+                <div id="stat-questions" class="text-3xl font-black text-purple-400 mb-1">0+</div>
+                <div class="text-xs text-gray-500 font-bold uppercase tracking-wider">Latihan Soal</div>
+              </div>
+              <div class="card-glass p-6 rounded-2xl border border-white/5 text-center">
+                <div class="text-3xl font-black text-emerald-400 mb-1">3</div>
+                <div class="text-xs text-gray-500 font-bold uppercase tracking-wider">Tingkat Sekolah</div>
+              </div>
+              <div class="card-glass p-6 rounded-2xl border border-white/5 text-center">
+                <div class="text-3xl font-black text-amber-400 mb-1">∞</div>
+                <div class="text-xs text-gray-500 font-bold uppercase tracking-wider">Semangat Belajar</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ Section -->
+        <div id="faq" class="scroll-mt-24 mb-20 px-4">
+          <h2 class="text-3xl font-black mb-10 text-center">Tanya <span class="text-indigo-400">Jawab (FAQ)</span>
+          </h2>
+          <div class="max-w-3xl mx-auto space-y-4">
+            <div class="card-glass rounded-2xl border border-white/5 overflow-hidden">
+              <button onclick="toggleFaq(this)"
+                class="w-full px-8 py-6 text-left flex items-center justify-between hover:bg-white/5 transition">
+                <span class="font-bold">Apakah aplikasi ini gratis?</span>
+                <span class="text-indigo-400 transition-transform duration-300">▼</span>
+              </button>
+              <div class="faq-content hidden px-8 pb-6 text-gray-400 text-sm leading-relaxed">
+                Ya, Ruang Edukasi sepenuhnya gratis digunakan untuk membantu siswa belajar Matematika dan Ekonomi
+                dengan
+                cara yang lebih menyenangkan.
+              </div>
+            </div>
+            <div class="card-glass rounded-2xl border border-white/5 overflow-hidden">
+              <button onclick="toggleFaq(this)"
+                class="w-full px-8 py-6 text-left flex items-center justify-between hover:bg-white/5 transition">
+                <span class="font-bold">Bagaimana cara mengukur progress belajar saya?</span>
+                <span class="text-indigo-400 transition-transform duration-300">▼</span>
+              </button>
+              <div class="faq-content hidden px-8 pb-6 text-gray-400 text-sm leading-relaxed">
+                Anda dapat melihat progress di halaman Dashboard (tombol di navbar). Sistem kami mencatat skor,
+                akurasi,
+                dan jumlah topik yang telah diselesaikan.
+              </div>
+            </div>
+            <div class="card-glass rounded-2xl border border-white/5 overflow-hidden">
+              <button onclick="toggleFaq(this)"
+                class="w-full px-8 py-6 text-left flex items-center justify-between hover:bg-white/5 transition">
+                <span class="font-bold">Materi apa saja yang tersedia?</span>
+                <span class="text-indigo-400 transition-transform duration-300">▼</span>
+              </button>
+              <div class="faq-content hidden px-8 pb-6 text-gray-400 text-sm leading-relaxed">
+                Saat ini kami menyediakan kurikulum lengkap untuk Matematika dan Ekonomi dari tingkat SD, SMP,
+                hingga
+                SMA sesuai dengan standar kurikulum terbaru.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Category Screen (The new Learning Dashboard) -->
+      <div id="category-screen" class="hidden slide-in">
+        <div class="mb-8 flex items-center justify-between">
+          <button onclick="showHome()" class="flex items-center gap-2 text-gray-400 hover:text-white transition group">
+            <span class="transform group-hover:-translate-x-1 transition-transform">←</span> Kembali ke Beranda
+          </button>
+          <div class="flex items-center gap-3">
+            <span class="active-subject-icon text-2xl">📐</span>
+            <h2 class="text-2xl font-bold active-subject-name">Matematika</h2>
+          </div>
+        </div>
+
+        <div id="levels-section" class="mb-12">
+          <h3 class="text-xl font-bold mb-6 flex items-center gap-3">
+            <span
+              class="w-8 h-8 rounded-lg bg-indigo-500/20 flex items-center justify-center text-indigo-400 text-lg">🎓</span>
+            Pilih Jenjang Sekolah
+          </h3>
+          <div class="grid md:grid-cols-3 gap-6">
+            <!-- SD Level -->
+            <div
+              class="level-card card-glass rounded-3xl p-8 cursor-pointer border-2 border-transparent hover:border-green-500/50 hover:bg-green-500/5 transition duration-500 group"
+              onclick="selectLevel('sd')">
+              <div class="flex items-center gap-4 mb-6">
+                <div
+                  class="w-16 h-16 rounded-2xl bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center text-3xl shadow-lg shadow-green-500/20 group-hover:scale-110 transition">
+                  🌱</div>
+                <div>
+                  <h3 class="text-xl font-bold">SD</h3>
+                  <p class="text-xs text-gray-500 font-bold uppercase tracking-wider">Sekolah Dasar</p>
+                </div>
+              </div>
+              <div class="flex items-center justify-between pt-4 border-t border-white/5">
+                <span class="text-gray-400 text-sm font-medium">Selesai: <span id="sd-progress"
+                    class="text-white font-bold">0</span></span>
+                <div class="w-20 h-1.5 bg-gray-800 rounded-full overflow-hidden">
+                  <div id="sd-progress-bar" class="h-full bg-green-500 transition-all" style="width: 0%"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- SMP Level -->
+            <div
+              class="level-card card-glass rounded-3xl p-8 cursor-pointer border-2 border-transparent hover:border-blue-500/50 hover:bg-blue-500/5 transition duration-500 group"
+              onclick="selectLevel('smp')">
+              <div class="flex items-center gap-4 mb-6">
+                <div
+                  class="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-600 flex items-center justify-center text-3xl shadow-lg shadow-blue-500/20 group-hover:scale-110 transition">
+                  🚀</div>
+                <div>
+                  <h3 class="text-xl font-bold">SMP</h3>
+                  <p class="text-xs text-gray-500 font-bold uppercase tracking-wider">Menengah Pertama</p>
+                </div>
+              </div>
+              <div class="flex items-center justify-between pt-4 border-t border-white/5">
+                <span class="text-gray-400 text-sm font-medium">Selesai: <span id="smp-progress"
+                    class="text-white font-bold">0</span></span>
+                <div class="w-20 h-1.5 bg-gray-800 rounded-full overflow-hidden">
+                  <div id="smp-progress-bar" class="h-full bg-blue-500 transition-all" style="width: 0%"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- SMA Level -->
+            <div
+              class="level-card card-glass rounded-3xl p-8 cursor-pointer border-2 border-transparent hover:border-purple-500/50 hover:bg-purple-500/5 transition duration-500 group"
+              onclick="selectLevel('sma')">
+              <div class="flex items-center gap-4 mb-6">
+                <div
+                  class="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center text-3xl shadow-lg shadow-purple-500/20 group-hover:scale-110 transition">
+                  🎯</div>
+                <div>
+                  <h3 class="text-xl font-bold">SMA</h3>
+                  <p class="text-xs text-gray-500 font-bold uppercase tracking-wider">Menengah Atas</p>
+                </div>
+              </div>
+              <div class="flex items-center justify-between pt-4 border-t border-white/5">
+                <span class="text-gray-400 text-sm font-medium">Selesai: <span id="sma-progress"
+                    class="text-white font-bold">0</span></span>
+                <div class="w-20 h-1.5 bg-gray-800 rounded-full overflow-hidden">
+                  <div id="sma-progress-bar" class="h-full bg-purple-500 transition-all" style="width: 0%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <h3 class="text-xl font-bold mb-6 flex items-center gap-3">
+          <span
+            class="w-8 h-8 rounded-lg bg-orange-500/20 flex items-center justify-center text-orange-400 text-lg">⚡</span>
+          Aksi Cepat
+        </h3>
+        <div class="grid sm:grid-cols-2 gap-6 p-8 bg-white/5 rounded-[2rem] border border-white/5">
+          <div class="flex items-center gap-6 cursor-pointer group" onclick="startExam()">
+            <div
+              class="w-16 h-16 rounded-2xl bg-gradient-to-br from-red-500 to-orange-500 flex items-center justify-center text-3xl shadow-xl shadow-red-500/20 group-hover:rotate-12 transition">
+              📝</div>
+            <div>
+              <h3 class="text-xl font-bold">Mode Ujian</h3>
+              <p class="text-gray-400 text-xs">Simulasi ujian dengan batas waktu.</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-6 cursor-pointer group" onclick="startRandom()">
+            <div
+              class="w-16 h-16 rounded-2xl bg-gradient-to-br from-yellow-500 to-amber-500 flex items-center justify-center text-3xl shadow-xl shadow-yellow-500/20 group-hover:rotate-12 transition">
+              🎲</div>
+            <div>
+              <h3 class="text-xl font-bold">Latihan Acak</h3>
+              <p class="text-gray-400 text-xs">Kumpulan soal random lintas topik.</p>
+            </div>
+          </div>
+        </div>
+      </div>
       <div id="level-screen" class="hidden slide-in"></div><!-- Topic Screen -->
       <div id="topic-screen" class="hidden slide-in"></div><!-- Quiz Screen -->
       <div id="quiz-screen" class="hidden slide-in"></div><!-- Stats Screen -->
-      <div id="creator-screen" class="hidden slide-in"></div><!-- Stats Screen -->
+      <div id="creator-screen" class="hidden slide-in">
+        <button onclick="showHome()"
+          class="flex items-center gap-2 text-gray-400 hover:text-white mb-8 transition group">
+          <span class="transform group-hover:-translate-x-1 transition-transform">←</span> Kembali
+        </button>
+        <div class="card-glass rounded-[2.5rem] overflow-hidden border border-white/5">
+          <div class="h-40 bg-gradient-to-r from-indigo-600 to-purple-600"></div>
+          <div class="px-8 pb-12 -mt-20 text-center sm:text-left">
+            <div class="inline-block p-2 rounded-[2.2rem] bg-gray-900 mb-6 shadow-2xl">
+              <img src="assets/img/Foto.jpg" alt="Bachrul Panji Gumilang"
+                class="w-36 h-36 rounded-[1.8rem] object-cover border-4 border-gray-800">
+            </div>
+            <div class="sm:flex items-end justify-between gap-6 mb-10">
+              <div>
+                <h2 class="text-3xl font-black mb-2">Bachrul Panji</h2>
+                <p class="text-indigo-400 font-bold mb-4 sm:mb-0">Fullstack Developer & Educator</p>
+              </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-10 text-left">
+              <div class="space-y-8">
+                <div>
+                  <h3 class="text-xl font-bold flex items-center gap-3 mb-4">
+                    <span
+                      class="w-8 h-8 rounded-lg bg-indigo-500/20 flex items-center justify-center text-indigo-400">🚀</span>
+                    Tentang Bachrul Panji Gumilang
+                  </h3>
+                  <p class="text-gray-400 text-sm leading-relaxed">
+                    Bachrul Panji Gumilang adalah seseorang yang tumbuh dari pengalaman belajar yang tidak selalu
+                    mudah.
+                    Saat masih sekolah, ia pernah dikenal sebagai “tukang tidur di kelas”. Bukan karena tidak
+                    peduli
+                    dengan pelajaran, tetapi karena sering merasa kesulitan memahami cara belajar yang diajarkan
+                    di
+                    sekolah. Beberapa mata pelajaran seperti matematika dan ekonomi bahkan sempat menjadi hal yang
+                    menakutkan baginya.Rasa takut dan kebingungan itu membuat Bachrul sering merasa tertinggal
+                    dibanding
+                    teman-temannya.Namun seiring waktu, ia mulai menyadari bahwa masalahnya bukan semata-mata pada
+                    kemampuannya, tetapi pada metode belajar yang kurang cocok untuk dirinya.
+                    <br>
+                    Perubahan besar mulai terjadi ketika Bachrul mengenal dunia coding. Awalnya belajar secara
+                    mandiri
+                    dengan banyak percobaan, kesalahan, dan kegagalan. Prosesnya tidak instan. Ia harus membaca
+                    banyak
+                    sumber, mencoba berbagai latihan, dan terus mengulang sampai benar-benar paham.Dari proses
+                    tersebut,
+                    Bachrul perlahan membangun pemahaman dan keterampilan hingga akhirnya mampu berkembang menjadi
+                    seorang programmer. Pengalaman pribadi itu membuatnya percaya bahwa setiap orang sebenarnya
+                    bisa
+                    belajar, selama diberikan cara belajar yang tepat dan lingkungan yang mendukung.
+                    <br>
+                    Karena itulah Bachrul memiliki visi untuk membangun ekosistem belajar digital yang inklusif
+                    dan
+                    menyenangkan. Ia ingin memastikan bahwa setiap siswa dapat mengakses materi berkualitas dengan
+                    metode yang mudah dipahami, tanpa harus merasa takut, tertinggal, atau terjebak dalam cara
+                    belajar
+                    yang kaku seperti yang pernah ia alami dulu.
+                  </p>
+                </div>
+                <div>
+                  <h3 class="text-xl font-bold flex items-center gap-3 mb-4">
+                    <span
+                      class="w-8 h-8 rounded-lg bg-indigo-500/20 flex items-center justify-center text-indigo-400">🚀</span>
+                    Visi & Misi
+                  </h3>
+                  <p class="text-gray-400 text-sm leading-relaxed">
+                    Membangun ekosistem belajar digital yang inklusif dan menyenangkan. Visi saya adalah
+                    memastikan
+                    setiap siswa dapat mengakses materi berkualitas dengan metode yang gampang dipahami, tanpa
+                    terhalang
+                    oleh cara belajar yang kaku.
+                  </p>
+                </div>
+                <div>
+                  <h3 class="text-xl font-bold flex items-center gap-3 mb-4">
+                    <span
+                      class="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-400">🛠️</span>
+                    Keahlian
+                  </h3>
+                  <div class="flex flex-wrap gap-2">
+                    <span
+                      class="px-3 py-1.5 rounded-lg bg-indigo-500/10 text-indigo-400 text-xs font-bold border border-indigo-500/10">UI/UX
+                      Design</span>
+                    <span
+                      class="px-3 py-1.5 rounded-lg bg-purple-500/10 text-purple-400 text-xs font-bold border border-purple-500/10">Php
+                      & laravel</span>
+                    <span
+                      class="px-3 py-1.5 rounded-lg bg-emerald-500/10 text-emerald-400 text-xs font-bold border border-emerald-500/10">Cyber
+                      Security & Ethical hacking</span>
+                    <span
+                      class="px-3 py-1.5 rounded-lg bg-orange-500/10 text-orange-400 text-xs font-bold border border-orange-500/10">jaringan
+                      Komputer</span>
+                    <span
+                      class="px-3 py-1.5 rounded-lg bg-orange-500/10 text-orange-400 text-xs font-bold border border-orange-500/10">html
+                      css & javascript</span>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <h3 class="text-xl font-bold flex items-center gap-3 mb-6">
+                  <span
+                    class="w-8 h-8 rounded-lg bg-red-500/20 flex items-center justify-center text-red-400">🛣️</span>
+                  Perjalanan Karir
+                </h3>
+                <div
+                  class="space-y-6 relative before:absolute before:left-[15px] before:top-2 before:bottom-2 before:w-0.5 before:bg-white/5">
+                  <div class="relative pl-10">
+                    <div
+                      class="absolute left-0 top-1 w-8 h-8 rounded-full bg-gray-900 border-2 border-indigo-500 flex items-center justify-center z-10">
+                      <div class="w-2 h-2 rounded-full bg-indigo-500"></div>
+                    </div>
+                    <h4 class="font-bold text-white text-sm">Sr. Educator & Developer</h4>
+                    <p class="text-indigo-400 text-xs mb-2">2024 - Sekarang</p>
+                    <p class="text-gray-500 text-xs leading-relaxed">Fokus pada pengembangan kurikulum interaktif
+                      dan
+                      aplikasi pembelajaran berbasis web.</p>
+                  </div>
+                  <div class="relative pl-10">
+                    <div
+                      class="absolute left-0 top-1 w-8 h-8 rounded-full bg-gray-900 border-2 border-purple-500 flex items-center justify-center z-10">
+                      <div class="w-2 h-2 rounded-full bg-purple-500"></div>
+                    </div>
+                    <h4 class="font-bold text-white text-sm">Fullstack Developer</h4>
+                    <p class="text-purple-400 text-xs mb-2">2021 - 2023</p>
+                    <p class="text-gray-500 text-xs leading-relaxed">Membangun berbagai course secara offline dan
+                      berkerja secara remote</p>
+                  </div>
+                  <div class="relative pl-10">
+                    <div
+                      class="absolute left-0 top-1 w-8 h-8 rounded-full bg-gray-900 border-2 border-emerald-500 flex items-center justify-center z-10">
+                      <div class="w-2 h-2 rounded-full bg-emerald-500"></div>
+                    </div>
+                    <h4 class="font-bold text-white text-sm">Junior Web Developer</h4>
+                    <p class="text-emerald-400 text-xs mb-2">2020 - 2021</p>
+                    <p class="text-gray-500 text-xs leading-relaxed">Memulai karir dengan mengerjakan
+                      proyek-proyek open
+                      source dan freelance.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <div id="stats-screen" class="hidden slide-in"></div>
     </main>
 
@@ -251,20 +526,22 @@
           <!-- About App -->
           <div class="col-span-1 md:col-span-2">
             <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
-              Ruang Math Panji
+              Ruang Edukasi
             </h3>
             <p class="text-gray-400 text-sm leading-relaxed mb-6">
-              Tempat belajar matematika yang seru buat anak SD, SMP, sampai SMA. Di sini kamu nggak cuma lihat rumus
-              lalu pusing sendiri 😄 Konsep dijelasin dengan cara yang lebih visual dan gampang dicerna, ada tips & trik
-              biar ngerjain soal terasa lebih “ringan”, plus latihan yang lengkap supaya makin pede.Intinya? Belajar
-              matematika tanpa tegang, tanpa drama, dan tanpa takut duluan.
+              Tempat belajar interaktif untuk menguasai berbagai mata pelajaran. Dari Matematika hingga Ekonomi,
+              kami
+              menyajikan materi dengan cara yang lebih visual, gampang dicerna, dan penuh tips & trik seru.
+              Belajar jadi
+              lebih ringan, tanpa drama, dan tanpa takut duluan.
             </p>
           </div>
           <!-- Quick Links -->
           <div>
             <h3 class="text-lg font-bold mb-4">Materi</h3>
             <ul class="space-y-2 text-sm text-gray-400">
-              <li><button onclick="selectLevel('sd')" class="hover:text-white transition">🌱 Sekolah Dasar</button></li>
+              <li><button onclick="selectLevel('sd')" class="hover:text-white transition">🌱 Sekolah
+                  Dasar</button></li>
               <li><button onclick="selectLevel('smp')" class="hover:text-white transition">🚀 SMP</button></li>
               <li><button onclick="selectLevel('sma')" class="hover:text-white transition">🎯 SMA</button></li>
             </ul>
@@ -274,8 +551,10 @@
             <h3 class="text-lg font-bold mb-4">Latihan</h3>
             <ul class="space-y-2 text-sm text-gray-400">
               <li><button onclick="startExam()" class="hover:text-white transition">📝 Mode Ujian</button></li>
-              <li><button onclick="startRandom()" class="hover:text-white transition">🎲 Latihan Acak</button></li>
-              <li><button onclick="showStats()" class="hover:text-white transition">📊 Statistik Anda</button></li>
+              <li><button onclick="startRandom()" class="hover:text-white transition">🎲 Latihan Acak</button>
+              </li>
+              <li><button onclick="showStats()" class="hover:text-white transition">📊 Statistik Anda</button>
+              </li>
               <li><button onclick="showCreatorProfile()" class="hover:text-white transition">👨‍💻 Profil
                   Pembuat</button></li>
             </ul>
@@ -284,7 +563,7 @@
         <!-- Divider -->
         <div class="border-t border-gray-700 pt-8 mt-8">
           <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-gray-500 text-xs">
-            <p>© 2025 Ruang Math Panji. Dibuat dengan untuk masa depan pendidikan.</p>
+            <p>© 2025 Ruang Edukasi. Dibuat dengan dedikasi untuk masa depan pendidikan.</p>
             <div class="flex gap-6">
               <a href="#" class="hover:text-white">Privacy Policy</a>
               <a href="#" class="hover:text-white">Terms of Service</a>
@@ -294,8 +573,22 @@
         </div>
       </div>
     </footer>
+  <!-- Custom Modal System -->
+  <div id="custom-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-4 bg-gray-900/60 backdrop-blur-sm animate-in fade-in duration-300">
+    <div class="card-glass w-full max-w-sm rounded-[2.5rem] p-8 border border-white/10 shadow-2xl transform animate-in zoom-in-95 duration-300">
+      <div id="modal-icon" class="w-16 h-16 rounded-2xl bg-indigo-500/10 flex items-center justify-center text-3xl mx-auto mb-6">⚠️</div>
+      <h3 id="modal-title" class="text-xl font-bold text-center mb-3">Konfirmasi</h3>
+      <p id="modal-message" class="text-gray-400 text-sm text-center mb-8 leading-relaxed"></p>
+      <div class="flex gap-4">
+        <button id="modal-cancel-btn" class="flex-1 py-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition font-bold text-sm">Batal</button>
+        <button id="modal-confirm-btn" class="flex-1 py-3 rounded-xl btn-primary shadow-lg shadow-indigo-500/20 transition font-bold text-sm">Ya, Lanjut</button>
+      </div>
+    </div>
   </div>
-  <script src="script.js"></script>
+
+  <script src="assets/js/math_data.js"></script>
+  <script src="assets/js/economics_data.js"></script>
+  <script src="assets/js/main.js"></script>
 </body>
 
 </html>
